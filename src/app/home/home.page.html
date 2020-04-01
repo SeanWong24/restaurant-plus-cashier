@@ -1,20 +1,41 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Cashier
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content no-padding [fullscreen]="true">
+  <ion-grid style="height: 100%;">
+    <ion-row style="height: 100%;">
+      <ion-col size="4" style="height: 100%;">
+        <ion-row style="height: 70%;">
+          <ion-col style="height: 100%;">
+            <ion-card>Table List</ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row style="height: 30%;">
+          <ion-col style="height: 100%;">
+            <ion-card>Table Detail</ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="5" style="height: 100%;">
+        <ion-row style="height: 70%;">
+          <ion-col style="height: 100%;">
+            <ion-card>Bill List</ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row style="height: 30%;">
+          <ion-col style="height: 100%;">
+            <ion-card>Bill Summary</ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="3" style="height: 100%;">
+        <ion-card>Management Buttons</ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
