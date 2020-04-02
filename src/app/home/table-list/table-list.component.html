@@ -1,0 +1,8 @@
+<ion-grid>
+  <ion-row>
+    <ion-col *ngFor="let table of tableList" size="4">
+      <ion-button class="large-button" [fill]="selectedTable === table ? 'outline' : 'solid'"
+        [color]="table.status | tableStatusColor" (click)="selectTable(table)">{{table.name}}</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

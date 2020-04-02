@@ -4,7 +4,9 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+import { TableStatusColorPipe } from './home.pipe';
 import { HomePage } from './home.page';
+import { TableListComponent } from './table-list/table-list.component';
 
 @NgModule({
   imports: [
@@ -18,6 +20,10 @@ import { HomePage } from './home.page';
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [
+    TableStatusColorPipe,
+    HomePage,
+    TableListComponent
+  ]
 })
-export class HomePageModule {}
+export class HomePageModule { }

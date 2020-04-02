@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Table } from '../models/table';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,8 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  selectedTable: Table;
+
+  constructor() { }
 
 }

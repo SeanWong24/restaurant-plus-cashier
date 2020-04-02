@@ -12,7 +12,9 @@
       <ion-col size="4" style="height: 100%;">
         <ion-row style="height: 70%;">
           <ion-col style="height: 100%;">
-            <ion-card>Table List</ion-card>
+            <ion-card>
+              <app-table-list #tableListComponenet [(selectedTable)]="selectedTable"></app-table-list>
+            </ion-card>
           </ion-col>
         </ion-row>
         <ion-row style="height: 30%;">
