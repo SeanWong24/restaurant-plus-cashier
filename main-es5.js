@@ -816,6 +816,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           return m.HomePageModule;
         });
       }
+    }, {
+      path: 'settings',
+      loadChildren: function loadChildren() {
+        return __webpack_require__.e(
+        /*! import() | settings-settings-module */
+        "settings-settings-module").then(__webpack_require__.bind(null,
+        /*! ./settings/settings.module */
+        "./src/app/settings/settings.module.ts")).then(function (m) {
+          return m.SettingsPageModule;
+        });
+      }
     }];
 
     var AppRoutingModule = function AppRoutingModule() {

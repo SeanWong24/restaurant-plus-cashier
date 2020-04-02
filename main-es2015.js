@@ -709,6 +709,10 @@ __webpack_require__.r(__webpack_exports__);
 const routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', loadChildren: () => __webpack_require__.e(/*! import() | home-home-module */ "home-home-module").then(__webpack_require__.bind(null, /*! ./home/home.module */ "./src/app/home/home.module.ts")).then(m => m.HomePageModule) },
+    {
+        path: 'settings',
+        loadChildren: () => __webpack_require__.e(/*! import() | settings-settings-module */ "settings-settings-module").then(__webpack_require__.bind(null, /*! ./settings/settings.module */ "./src/app/settings/settings.module.ts")).then(m => m.SettingsPageModule)
+    },
 ];
 let AppRoutingModule = class AppRoutingModule {
 };
