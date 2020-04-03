@@ -4,9 +4,10 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { TableStatusColorPipe } from './home.pipe';
+import { TableStatusColorPipe, TableOperationButtonTextPipe } from './home.pipe';
 import { HomePage } from './home.page';
 import { TableListComponent } from './table-list/table-list.component';
+import { TableDetailComponent } from './table-detail/table-detail.component';
 
 @NgModule({
   imports: [
@@ -22,8 +23,10 @@ import { TableListComponent } from './table-list/table-list.component';
   ],
   declarations: [
     TableStatusColorPipe,
+    TableOperationButtonTextPipe,
     HomePage,
-    TableListComponent
+    TableListComponent,
+    TableDetailComponent
   ]
 })
 export class HomePageModule { }

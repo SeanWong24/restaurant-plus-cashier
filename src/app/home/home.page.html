@@ -24,7 +24,10 @@
         </ion-row>
         <ion-row style="height: 30%;">
           <ion-col style="height: 100%;">
-            <ion-card>Table Detail</ion-card>
+            <ion-card>
+              <app-table-detail [selectedTable]="selectedTable"
+                [tableListRefreshHandler]="tableListComponenet.fetchTableList"></app-table-detail>
+            </ion-card>
           </ion-col>
         </ion-row>
       </ion-col>

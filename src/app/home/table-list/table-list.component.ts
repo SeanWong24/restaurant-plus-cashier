@@ -35,7 +35,7 @@ export class TableListComponent implements OnInit {
     this.selectedTable = table;
   }
 
-  async fetchTableList() {
+  fetchTableList = async () => {
     const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/table');
     this.tableList = await response.json();
 

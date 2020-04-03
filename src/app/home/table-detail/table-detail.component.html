@@ -1,0 +1,35 @@
+<!-- Assuming the container of this component is an ion-card. -->
+
+<ion-card-header>
+  <ion-card-title>
+    <ion-label>{{selectedTable ? selectedTable.name : 'No Selected Table'}}</ion-label>
+    <ion-label color="secondary" style="margin-left: 0.8em; font-size: 1em;">{{tableDuration}}</ion-label>
+    <ion-label [color]="(selectedTable ? selectedTable.status : '') | tableStatusColor"
+      style="float: right; font-size: 1.2em;">{{selectedTable ? selectedTable.status : ''}}</ion-label>
+  </ion-card-title>
+</ion-card-header>
+
+<ion-card-content style="height: calc(100% - 56px);">
+  <ion-row style="height: 100%">
+    <ion-col size="12">
+      <ion-item
+        [disabled]="!selectedTable || (selectedTable.status !== 'Free' && selectedTable.status !== 'Using' && selectedTable.status !== 'Reserved')">
+        <ion-label position="fixed">Customers</ion-label>
+        <ion-input #occupiedInput type="number" [value]="selectedTable ? selectedTable.occupied : 0"></ion-input>
+        <ion-label slot="end">of {{selectedTable ? selectedTable.capacity : 0}}</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-button class="large-button" color="light" (click)="operate(0, occupiedInput.value)">
+        {{(selectedTable ? selectedTable.status : '') | tableOperationButtonText: 0}}</ion-button>
+    </ion-col>
+    <ion-col size="4">
+      <ion-button class="large-button" color="light" (click)="operate(1, occupiedInput.value)">
+        {{(selectedTable ? selectedTable.status : '') | tableOperationButtonText: 1}}</ion-button>
+    </ion-col>
+    <ion-col size="4">
+      <ion-button class="large-button" color="light" (click)="operate(2, occupiedInput.value)">
+        {{(selectedTable ? selectedTable.status : '') | tableOperationButtonText: 2}}</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-card-content>
