@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Table } from '../models/table';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,10 @@ export class HomePage {
 
   selectedTable: Table;
 
-  constructor() { }
+  constructor(private navControlor: NavController) { }
+
+  goToSettingsPage() {
+    this.navControlor.navigateForward('/settings');
+  }
 
 }
