@@ -8,6 +8,8 @@ import { Table } from 'src/app/models/table';
 })
 export class TableDetailComponent implements OnInit {
 
+  private tableTimer: any;
+
   @Input() selectedTable: Table;
   @Input() tableListRefreshHandler: () => void;
 
@@ -34,7 +36,10 @@ export class TableDetailComponent implements OnInit {
   }
 
   private startTableTimer() {
-    setInterval(() => {
+    if (this.tableTimer) {
+      clearInterval(this.tableTimer);
+    }
+    this.tableTimer = setInterval(() => {
       if (this.selectedTable && this.selectedTable.startTime) {
         const startTime = new Date(this.selectedTable.startTime);
         const currentTime = new Date();
