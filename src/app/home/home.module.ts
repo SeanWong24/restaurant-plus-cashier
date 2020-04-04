@@ -9,6 +9,7 @@ import { HomePage } from './home.page';
 import { TableListComponent } from './table-list/table-list.component';
 import { TableDetailComponent } from './table-detail/table-detail.component';
 import { OperationButtonsComponent } from './operation-buttons/operation-buttons.component';
+import { BillItemListComponent } from './bill-item-list/bill-item-list.component';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { OperationButtonsComponent } from './operation-buttons/operation-buttons
     HomePage,
     TableListComponent,
     TableDetailComponent,
+    BillItemListComponent,
     OperationButtonsComponent
   ]
 })

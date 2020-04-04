@@ -34,7 +34,9 @@
       <ion-col size="5" style="height: 100%;">
         <ion-row style="height: 70%;">
           <ion-col style="height: 100%;">
-            <ion-card>Bill List</ion-card>
+            <ion-card>
+              <app-bill-item-list #billItemListComponent [selectedTable]="selectedTable"></app-bill-item-list>
+            </ion-card>
           </ion-col>
         </ion-row>
         <ion-row style="height: 30%;">
