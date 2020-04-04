@@ -8,6 +8,7 @@ import { TableStatusColorPipe, TableOperationButtonTextPipe } from './home.pipe'
 import { HomePage } from './home.page';
 import { TableListComponent } from './table-list/table-list.component';
 import { TableDetailComponent } from './table-detail/table-detail.component';
+import { OperationButtonsComponent } from './operation-buttons/operation-buttons.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { TableDetailComponent } from './table-detail/table-detail.component';
     TableOperationButtonTextPipe,
     HomePage,
     TableListComponent,
-    TableDetailComponent
+    TableDetailComponent,
+    OperationButtonsComponent
   ]
 })
 export class HomePageModule { }
