@@ -28,7 +28,7 @@ export class BillItemListComponent implements OnInit {
 
   refreshBillItems = async () => {
     if (this.selectedTable) {
-      const bill = await this.fetchBill(this.selectedTable.name);
+      const bill = await this.fetchBill(this.selectedTable.id);
       if (bill) {
         const menuItemList = await this.fetchMenuItemList();
         const billItemList = await this.fetchBillItemList(bill.id, "False");
