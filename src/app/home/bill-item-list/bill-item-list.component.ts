@@ -11,7 +11,7 @@ import { Bill } from 'src/app/models/bill';
 })
 export class BillItemListComponent implements OnInit {
 
-  dispalyedBillItemList: DisplayedBillItem[] = [];
+  displayedBillItemList: DisplayedBillItem[] = [];
 
   private _selectedTable: Table;
   get selectedTable() {
@@ -32,11 +32,11 @@ export class BillItemListComponent implements OnInit {
       if (bill) {
         const menuItemList = await this.fetchMenuItemList();
         const billItemList = await this.fetchBillItemList(bill.id, "False");
-        this.dispalyedBillItemList = this.generateDisplayList(billItemList, menuItemList);
+        this.displayedBillItemList = this.generateDisplayList(billItemList, menuItemList);
         return;
       }
     }
-    this.dispalyedBillItemList = [];
+    this.displayedBillItemList = [];
   }
 
   private selectedTableChangedHandler() {
