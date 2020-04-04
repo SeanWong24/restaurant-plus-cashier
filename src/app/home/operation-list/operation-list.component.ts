@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { MenuItemPickerComponent } from './menu-item-picker/menu-item-picker.component';
 import { Table } from 'src/app/models/table';
 import { DisplayedBillItem } from 'src/app/models/bill-item';
@@ -15,7 +15,7 @@ export class OperationListComponent implements OnInit {
   @Input() displayedBillItemList: DisplayedBillItem[];
   @Input() refreshBillItemsHandler: () => void;
 
-  constructor(private modalController: ModalController) { }
+  constructor(private modalController: ModalController, private alertController: AlertController) { }
 
   ngOnInit() { }
 
@@ -38,6 +38,28 @@ export class OperationListComponent implements OnInit {
       }
     });
     await modal.present();
+  }
+
+  async deleteItems() {
+    const selectedItemList = this.displayedBillItemList.filter(item => item.isSelected);
+    const alert = await this.alertController.create({
+      header: 'Delete Items',
+      message: 'Are you sure to delete ' + selectedItemList.length + ' selected item(s)?',
+      buttons: [
+        'Cancel',
+        {
+          text: 'Confirm',
+          handler: () => {
+            selectedItemList.forEach(async displayItem => {
+              const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill/item?id=' + displayItem.billItem.id, { method: 'DELETE' });
+            });
+            this.refreshBillItemsHandler();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }
