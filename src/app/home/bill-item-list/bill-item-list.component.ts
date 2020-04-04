@@ -13,6 +13,8 @@ export class BillItemListComponent implements OnInit {
 
   displayedBillItemList: DisplayedBillItem[] = [];
 
+  @Input() refreshBillSummaryHandler: (dispalyItemList: DisplayedBillItem[]) => void;
+
   private _selectedTable: Table;
   get selectedTable() {
     return this._selectedTable;
@@ -33,11 +35,23 @@ export class BillItemListComponent implements OnInit {
         const menuItemList = await this.fetchMenuItemList();
         const billItemList = await this.fetchBillItemList(bill.id, "False");
         this.displayedBillItemList = this.generateDisplayList(billItemList, menuItemList);
+
+        this.refreshBillSummaryHandler(this.displayedBillItemList);
         return;
       }
     }
     this.displayedBillItemList = [];
   }
+
+  checkBoxValueChangeHandler() {
+    const selectedItemList = this.displayedBillItemList.filter(item => item.isSelected);
+    if (selectedItemList.length > 0) {
+      this.refreshBillSummaryHandler(selectedItemList);
+    } else {
+      this.refreshBillSummaryHandler(this.displayedBillItemList);
+    }
+  }
+
 
   private selectedTableChangedHandler() {
     this.refreshBillItems();

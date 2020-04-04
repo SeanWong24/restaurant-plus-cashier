@@ -11,6 +11,7 @@ import { TableDetailComponent } from './table-detail/table-detail.component';
 import { OperationListComponent } from './operation-list/operation-list.component';
 import { BillItemListComponent } from './bill-item-list/bill-item-list.component';
 import { MenuItemPickerComponent } from './operation-list/menu-item-picker/menu-item-picker.component';
+import { BillSummaryComponent } from './bill-summary/bill-summary.component';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { MenuItemPickerComponent } from './operation-list/menu-item-picker/menu-
     TableListComponent,
     TableDetailComponent,
     BillItemListComponent,
+    BillSummaryComponent,
     OperationListComponent,
     MenuItemPickerComponent
   ],

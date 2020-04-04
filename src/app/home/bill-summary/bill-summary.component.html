@@ -1,0 +1,37 @@
+<!-- Assuming the container of this component is an ion-card. -->
+
+<ion-card-header>
+  <ion-card-subtitle>
+    <ion-label color="success">{{billItemCount}}</ion-label>
+    <ion-label style="margin-left: 1em;">items selected</ion-label>
+  </ion-card-subtitle>
+</ion-card-header>
+
+<ion-card-content style="height: calc(100% - 56px);">
+  <ion-grid>
+    <ion-row style="height: 70%">
+      <ion-col size="8">
+        <ion-label style="margin-right: 1em; font-size: 1.3em;">Price:</ion-label>
+        <ion-label color="dark" style="font-size: 1.6em;">${{billPriceBeforeTaxes.toFixed(2)}}</ion-label>
+      </ion-col>
+      <ion-col size="4">
+        <ion-row>
+          <ion-label style="margin-right: 1em; font-size: 1em;">GST:</ion-label>
+          <ion-label color="dark" style="font-size: 1.2em;">${{billGst.toFixed(2)}}</ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-label style="margin-right: 1em; font-size: 1em;">PST:</ion-label>
+          <ion-label color="dark" style="font-size: 1.2em;">${{billPst.toFixed(2)}}</ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-label style="margin-right: 1em; font-size: 1em;">LCT:</ion-label>
+          <ion-label color="dark" style="font-size: 1.2em;">${{billLct.toFixed(2)}}</ion-label>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row style="height: 30%">
+      <ion-label style="margin-right: 1em; font-size: 1.4em;">Balance:</ion-label>
+      <ion-label color="danger" style="font-size: 1.8em;">${{billPriceAfterTaxes.toFixed(2)}}</ion-label>
+    </ion-row>
+  </ion-grid>
+</ion-card-content>

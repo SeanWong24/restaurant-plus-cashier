@@ -1,7 +1,8 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let item of displayedBillItemList">
-      <ion-checkbox slot="start" [(ngModel)]="item.isSelected"></ion-checkbox>
+      <ion-checkbox slot="start" [(ngModel)]="item.isSelected" (ionChange)="checkBoxValueChangeHandler()">
+      </ion-checkbox>
       <ion-row style="width: 100%;">
         <ion-col size="6">
           <ion-label>{{item.itemName}}</ion-label>
