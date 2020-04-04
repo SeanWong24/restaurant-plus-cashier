@@ -17,14 +17,16 @@
       <ion-col size="4">
         <ion-card>
           <ion-content>
-            <ion-item *ngFor="let item of selectedMenuItemList">
-              <ion-buttons slot="end">
-                <ion-button (click)="removeMenuItem(item)">
-                  <ion-icon slot="icon-only" name="remove"></ion-icon>
-                </ion-button>
-              </ion-buttons>
-              <ion-label>{{ item.name }} * {{ item.quantity }}</ion-label>
-            </ion-item>
+            <ion-list>
+              <ion-item *ngFor="let item of selectedMenuItemList">
+                <ion-buttons slot="end">
+                  <ion-button (click)="removeMenuItem(item)">
+                    <ion-icon slot="icon-only" name="remove"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+                <ion-label>{{ item.name }} * {{ item.quantity }}</ion-label>
+              </ion-item>
+            </ion-list>
           </ion-content>
         </ion-card>
         <ion-button expand="block" (click)="confirm()">Confirm</ion-button>
