@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Add Items
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content id="page-wrap">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4">
+        <ion-card>
+          <ion-content>
+            <ion-item *ngFor="let item of selectedMenuItemList">
+              <ion-buttons slot="end">
+                <ion-button (click)="removeMenuItem(item)">
+                  <ion-icon slot="icon-only" name="remove"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+              <ion-label>{{ item.name }} * {{ item.quantity }}</ion-label>
+            </ion-item>
+          </ion-content>
+        </ion-card>
+        <ion-button expand="block" (click)="confirm()">Confirm</ion-button>
+      </ion-col>
+      <ion-col size="8">
+        <ion-segment scrollable [(ngModel)]="selectedCategory">
+          <ion-segment-button *ngFor="let category of categoryList" [value]="category">{{ category.name }}
+          </ion-segment-button>
+        </ion-segment>
+        <ion-content>
+          <ion-button *ngFor="let menuItem of displayedMenuItemList" (click)="addMenuItem(menuItem)"
+            class="menu-item-box">
+            <ion-label text-wrap>{{ menuItem.name }}</ion-label>
+          </ion-button>
+        </ion-content>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

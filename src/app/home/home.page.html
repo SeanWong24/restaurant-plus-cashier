@@ -47,7 +47,8 @@
       </ion-col>
       <ion-col size="3" style="height: 100%;">
         <ion-card>
-          <app-operation-buttons></app-operation-buttons>
+          <app-operation-buttons [selectedTable]="selectedTable"
+            [refreshBillItemsHandler]="billItemListComponent.refreshBillItems"></app-operation-buttons>
         </ion-card>
       </ion-col>
     </ion-row>

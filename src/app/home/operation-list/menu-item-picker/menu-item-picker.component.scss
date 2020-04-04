@@ -1,0 +1,21 @@
+#page-wrap {
+    --overflow: hidden;
+}
+
+ion-grid {
+    height: 100%;
+}
+
+ion-row {
+    height: 100%;
+}
+
+ion-card {
+    height: calc(100% - 40px);
+    margin: 0;
+}
+
+.menu-item-box {
+    height: 100px;
+    width: 100px;
+}

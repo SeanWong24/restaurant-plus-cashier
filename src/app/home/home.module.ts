@@ -10,6 +10,7 @@ import { TableListComponent } from './table-list/table-list.component';
 import { TableDetailComponent } from './table-detail/table-detail.component';
 import { OperationListComponent } from './operation-list/operation-list.component';
 import { BillItemListComponent } from './bill-item-list/bill-item-list.component';
+import { MenuItemPickerComponent } from './operation-list/menu-item-picker/menu-item-picker.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,11 @@ import { BillItemListComponent } from './bill-item-list/bill-item-list.component
     TableListComponent,
     TableDetailComponent,
     BillItemListComponent,
-    OperationListComponent
+    OperationListComponent,
+    MenuItemPickerComponent
+  ],
+  entryComponents: [
+    MenuItemPickerComponent
   ]
 })
 export class HomePageModule { }
