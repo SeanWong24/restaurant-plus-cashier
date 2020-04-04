@@ -3,6 +3,7 @@ import { ModalController, AlertController } from '@ionic/angular';
 import { MenuItemPickerComponent } from './menu-item-picker/menu-item-picker.component';
 import { Table } from 'src/app/models/table';
 import { DisplayedBillItem } from 'src/app/models/bill-item';
+import { PaymentComponent } from './payment/payment.component';
 
 @Component({
   selector: 'app-operation-buttons',
@@ -113,6 +114,23 @@ export class OperationListComponent implements OnInit {
     });
 
     await alert.present();
+  }
+
+  async pay() {
+    const billItemIdList = this.displayedBillItemList
+      .filter(item => item.isSelected)
+      .map(item => item.billItem.id);
+    const modal = await this.modalController.create({
+      component: PaymentComponent,
+      cssClass: 'large-modal',
+      id: 'payment-modal',
+      componentProps: {
+        selectedBillItemIds: billItemIdList,
+        selectedTable: this.selectedTable,
+        refreshBillItemsHandler: this.refreshBillItemsHandler
+      }
+    });
+    await modal.present();
   }
 
 }

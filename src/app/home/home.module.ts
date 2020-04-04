@@ -12,6 +12,7 @@ import { OperationListComponent } from './operation-list/operation-list.componen
 import { BillItemListComponent } from './bill-item-list/bill-item-list.component';
 import { MenuItemPickerComponent } from './operation-list/menu-item-picker/menu-item-picker.component';
 import { BillSummaryComponent } from './bill-summary/bill-summary.component';
+import { PaymentComponent } from './operation-list/payment/payment.component';
 
 @NgModule({
   imports: [
@@ -34,10 +35,12 @@ import { BillSummaryComponent } from './bill-summary/bill-summary.component';
     BillItemListComponent,
     BillSummaryComponent,
     OperationListComponent,
-    MenuItemPickerComponent
+    MenuItemPickerComponent,
+    PaymentComponent
   ],
   entryComponents: [
-    MenuItemPickerComponent
+    MenuItemPickerComponent,
+    PaymentComponent
   ]
 })
 export class HomePageModule { }
