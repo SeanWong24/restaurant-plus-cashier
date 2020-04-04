@@ -62,4 +62,57 @@ export class OperationListComponent implements OnInit {
     await alert.present();
   }
 
+  async combine() {
+    const billItemIdList = this.displayedBillItemList
+      .filter(item => item.isSelected)
+      .map(item => item.billItem.id);
+    const response = await fetch(
+      localStorage.getItem('serverApiBaseUrl') + '/bill/item/combine',
+      {
+        headers: { 'Content-Type': 'application/json' },
+        method: 'PUT',
+        body: JSON.stringify(billItemIdList)
+      }
+    );
+    this.refreshBillItemsHandler();
+  }
+
+  async split() {
+    const billItemIdList = this.displayedBillItemList
+      .filter(item => item.isSelected)
+      .map(item => item.billItem.id);
+    const alert = await this.alertController.create({
+      header: 'Split items into',
+      inputs: [
+        {
+          name: 'quantity',
+          type: 'number',
+          placeholder: 'Enter a number to split.'
+        }
+      ],
+      buttons: [
+        'Cancel',
+        {
+          text: 'Confirm',
+          handler: async (alertData) => {
+            const quantity = alertData.quantity;
+            if (quantity) {
+              const response = await fetch(
+                localStorage.getItem('serverApiBaseUrl') + '/bill/item/split?quantity=' + quantity,
+                {
+                  headers: { 'Content-Type': 'application/json' },
+                  method: 'PUT',
+                  body: JSON.stringify(billItemIdList)
+                }
+              );
+              this.refreshBillItemsHandler();
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 }
