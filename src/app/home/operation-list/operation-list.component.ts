@@ -16,6 +16,15 @@ export class OperationListComponent implements OnInit {
   @Input() displayedBillItemList: DisplayedBillItem[];
   @Input() refreshBillItemsHandler: () => void;
 
+  get isSelectedTableUsing() {
+    return this.selectedTable && this.selectedTable.status === Table.Status.Using;
+  }
+
+  get isSelectedDisplayedBillItemListEmpty() {
+    const selectedDisplayedBillItemList = this.displayedBillItemList.filter(displayedBillItem => displayedBillItem.isSelected);
+    return !selectedDisplayedBillItemList || selectedDisplayedBillItemList.length <= 0;
+  }
+
   constructor(private modalController: ModalController, private alertController: AlertController) { }
 
   ngOnInit() { }

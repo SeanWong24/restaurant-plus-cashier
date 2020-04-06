@@ -1,50 +1,55 @@
 <ion-grid>
   <ion-row>
     <ion-col>
-      <ion-button class="large-button" color="medium" (click)="selectAll()">Select All</ion-button>
+      <ion-button [disabled]="!isSelectedTableUsing" class="large-button" color="medium" (click)="selectAll()">Select All
+      </ion-button>
     </ion-col>
     <ion-col>
-      <ion-button class="large-button" color="medium" (click)="clearAll()">Clear All</ion-button>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-button class="large-button" color="medium" (click)="addItem()">Add Item</ion-button>
-    </ion-col>
-    <ion-col>
-      <ion-button class="large-button" color="medium" (click)="deleteItems()">Delete Items</ion-button>
+      <ion-button [disabled]="!isSelectedTableUsing || isSelectedDisplayedBillItemListEmpty" class="large-button" color="medium" (click)="clearAll()">Clear All
+      </ion-button>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-button class="large-button" color="medium" (click)="combine()">Combine</ion-button>
+      <ion-button [disabled]="!isSelectedTableUsing" class="large-button" color="medium" (click)="addItem()">Add Item
+      </ion-button>
     </ion-col>
     <ion-col>
-      <ion-button class="large-button" color="medium" (click)="split()">Split</ion-button>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-button class="large-button" color="medium"></ion-button>
-    </ion-col>
-    <ion-col>
-      <ion-button class="large-button" color="medium"></ion-button>
+      <ion-button [disabled]="!isSelectedTableUsing || isSelectedDisplayedBillItemListEmpty" class="large-button" color="medium" (click)="deleteItems()">Delete Items
+      </ion-button>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-button class="large-button" color="medium"></ion-button>
+      <ion-button [disabled]="!isSelectedTableUsing || isSelectedDisplayedBillItemListEmpty" class="large-button" color="medium" (click)="combine()">Combine
+      </ion-button>
     </ion-col>
     <ion-col>
-      <ion-button class="large-button" color="medium"></ion-button>
+      <ion-button [disabled]="!isSelectedTableUsing || isSelectedDisplayedBillItemListEmpty" class="large-button" color="medium" (click)="split()">Split</ion-button>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-button class="large-button" color="medium"></ion-button>
+      <ion-button [disabled]="true" class="large-button" color="medium"></ion-button>
     </ion-col>
     <ion-col>
-      <ion-button class="large-button" color="medium" (click)="pay()">Pay</ion-button>
+      <ion-button [disabled]="true" class="large-button" color="medium"></ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-button [disabled]="true" class="large-button" color="medium"></ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button [disabled]="true" class="large-button" color="medium"></ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-button [disabled]="true" class="large-button" color="medium"></ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button [disabled]="!isSelectedTableUsing || isSelectedDisplayedBillItemListEmpty" class="large-button" color="medium" (click)="pay()">Pay</ion-button>
     </ion-col>
   </ion-row>
 </ion-grid>
