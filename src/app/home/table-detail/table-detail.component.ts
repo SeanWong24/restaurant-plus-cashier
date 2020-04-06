@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Table } from 'src/app/models/table';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-table-detail',
@@ -15,7 +16,7 @@ export class TableDetailComponent implements OnInit {
 
   tableDuration: string;
 
-  constructor() { }
+  constructor(private alertController: AlertController) { }
 
   ngOnInit() {
     this.startTableTimer();
@@ -151,11 +152,27 @@ export class TableDetailComponent implements OnInit {
   }
 
   private async close() {
-    const response = await fetch(
-      localStorage.getItem('serverApiBaseUrl') +
-      '/table/close?id=' + this.selectedTable.id,
-      { method: 'PUT' }
-    );
+    const alert = await this.alertController.create({
+      header: 'Close ' + this.selectedTable.name,
+      message: 'Are you sure to close ' + this.selectedTable.name + '?',
+      buttons: [
+        'Cancel',
+        {
+          text: 'Confirm',
+          handler: async () => {
+            const response = await fetch(
+              localStorage.getItem('serverApiBaseUrl') +
+              '/table/close?id=' + this.selectedTable.id,
+              { method: 'PUT' }
+            );
+            // TODO doing this twice, try to find a solution to call it just once
+            this.tableListRefreshHandler();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }
