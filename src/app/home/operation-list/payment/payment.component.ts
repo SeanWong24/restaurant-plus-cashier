@@ -87,7 +87,7 @@ export class PaymentComponent implements OnInit {
   ionViewDidEnter() {
     this.fetchBillItem();
   }
-  
+
   async fetchBillItem(){
     for (let billItemId of this.selectedBillItemIds) {
       const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill/item?id=' + billItemId + '&hasPaid=False');
@@ -132,10 +132,12 @@ export class PaymentComponent implements OnInit {
   }
   
   async confirmPayment() {
+    console.log("called");
     if (this.selectedTable) {
-      const bill = await this.fetchBill(this.selectedTable.name);
+      console.log("selected table")
+      const bill = await this.fetchBill(this.selectedTable.id);
       if (bill) {
-        await fetch(
+        const respond = await fetch(
           localStorage.getItem('serverApiBaseUrl') +
           '/payment/pay?' +
           'billId=' + bill.id +
