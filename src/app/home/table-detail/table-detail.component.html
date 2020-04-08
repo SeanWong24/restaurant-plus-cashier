@@ -15,7 +15,7 @@
       <ion-item
         [disabled]="!selectedTable || (selectedTable.status !== 'Free' && selectedTable.status !== 'Using' && selectedTable.status !== 'Reserved')">
         <ion-label position="fixed">Customers</ion-label>
-        <ion-input #occupiedInput type="number" [value]="selectedTable ? selectedTable.occupied : 0"></ion-input>
+        <ion-input #occupiedInput type="number" [value]="selectedTable ? selectedTable.occupied : 1"></ion-input>
         <ion-label slot="end">of {{selectedTable ? selectedTable.capacity : 0}}</ion-label>
       </ion-item>
     </ion-col>
