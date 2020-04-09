@@ -15,7 +15,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size="4">
-        <ion-card>
+        <ion-card id="selected-item-container-card">
           <ion-content>
             <ion-list>
               <ion-item *ngFor="let item of selectedMenuItemList">
@@ -37,10 +37,18 @@
           </ion-segment-button>
         </ion-segment>
         <ion-content>
-          <ion-button *ngFor="let menuItem of displayedMenuItemList" (click)="addMenuItem(menuItem)"
-            class="menu-item-box">
-            <ion-label text-wrap>{{ menuItem.name }}</ion-label>
-          </ion-button>
+          <ion-grid>
+            <ion-row>
+              <ion-col id="menu-item-box" *ngFor="let menuItem of displayedMenuItemList">
+                <ion-card button (click)="addMenuItem(menuItem)">
+                  <ion-img #menuItemImageElement [src]="menuItem.imageUrl"
+                    (ionError)="menuItemImageElement.src='https://unpkg.com/ionicons@5.0.0/dist/svg/restaurant-outline.svg'">
+                  </ion-img>
+                  <ion-label>{{menuItem.name}}</ion-label>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-content>
       </ion-col>
     </ion-row>
