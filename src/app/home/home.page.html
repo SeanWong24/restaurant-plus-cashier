@@ -51,7 +51,8 @@
         <ion-card>
           <app-operation-buttons [selectedTable]="selectedTable"
             [displayedBillItemList]="billItemListComponent.displayedBillItemList"
-            [refreshBillItemsHandler]="billItemListComponent.refreshBillItems"></app-operation-buttons>
+            [refreshBillItemsHandler]="billItemListComponent.refreshBillItems"
+            [tableListRefreshHandler]="tableListComponenet.fetchTableList"></app-operation-buttons>
         </ion-card>
       </ion-col>
     </ion-row>

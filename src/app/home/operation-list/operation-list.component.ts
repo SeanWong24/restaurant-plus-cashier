@@ -15,6 +15,7 @@ export class OperationListComponent implements OnInit {
   @Input() selectedTable: Table;
   @Input() displayedBillItemList: DisplayedBillItem[];
   @Input() refreshBillItemsHandler: () => void;
+  @Input() tableListRefreshHandler: () => void;
 
   get isSelectedTableUsing() {
     return this.selectedTable && this.selectedTable.status === Table.Status.Using;
@@ -136,7 +137,8 @@ export class OperationListComponent implements OnInit {
       componentProps: {
         selectedBillItemIds: billItemIdList,
         selectedTable: this.selectedTable,
-        refreshBillItemsHandler: this.refreshBillItemsHandler
+        refreshBillItemsHandler: this.refreshBillItemsHandler,
+        tableListRefreshHandler: this.tableListRefreshHandler
       }
     });
     await modal.present();

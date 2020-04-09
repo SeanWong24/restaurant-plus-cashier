@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { Component, OnInit, Input } from '@angular/core';
+import { ModalController, NavParams, AlertController } from '@ionic/angular';
 import { Table } from 'src/app/models/table';
 import { BillItem } from 'src/app/models/bill-item';
 import { MenuItem } from 'src/app/models/menu-item';
-import { MenuCategory } from 'src/app/models/menu-category';
 import { Bill } from 'src/app/models/bill';
 
 @Component({
@@ -75,13 +74,15 @@ export class PaymentComponent implements OnInit {
   selectedTable: Table;
   selectedBillItemIds: [];
   refreshBillItemsHandler: () => void;
+  tableListRefreshHandler: () => void;
 
-  constructor(private modalController: ModalController, private navParams: NavParams) { }
+  constructor(private modalController: ModalController, private navParams: NavParams, private alertController: AlertController) { }
 
   ngOnInit() {
     this.selectedTable = this.navParams.get('selectedTable');
     this.selectedBillItemIds = this.navParams.get('selectedBillItemIds');
     this.refreshBillItemsHandler = this.navParams.get('refreshBillItemsHandler');
+    this.tableListRefreshHandler = this.navParams.get('tableListRefreshHandler');
   }
 
   ionViewDidEnter() {
@@ -132,9 +133,7 @@ export class PaymentComponent implements OnInit {
   }
   
   async confirmPayment() {
-    console.log("called");
     if (this.selectedTable) {
-      console.log("selected table")
       const bill = await this.fetchBill(this.selectedTable.id);
       if (bill) {
         const respond = await fetch(
@@ -149,9 +148,47 @@ export class PaymentComponent implements OnInit {
             body: JSON.stringify(this.selectedBillItemIds) });
           
           this.refreshBillItemsHandler();
+
+          const respond2 = await fetch(
+            localStorage.getItem('serverApiBaseUrl') +
+            '/bill/item?' +
+            'billId=' + bill.id +
+            '&hasPaid=' + 'false'
+          );
+          const unPaidItem = await respond2.json();
+          if (respond && Object.keys(unPaidItem).length == 0) {
+            this.closeTableAlertConfirm();
+          }
           this.dismiss();
       }
     }
+  }
+
+  async closeTableAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'All items are paid.',
+      message: '<strong>Close this table?<strong>',
+      buttons: [
+        {
+          text: 'NOT YET',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'YES',
+          handler: async () => {
+            const respond3 = await fetch(localStorage.getItem('serverApiBaseUrl') +
+            '/table/close?' +
+            'id=' + this.selectedTable.id,
+            { method: 'PUT' }
+            );
+
+            this.tableListRefreshHandler();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   dismiss() {
