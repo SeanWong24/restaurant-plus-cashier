@@ -108,7 +108,7 @@ export class TableDetailComponent implements OnInit {
     const response = await fetch(
       localStorage.getItem('serverApiBaseUrl') +
       '/table/open?id=' + this.selectedTable.id +
-      '&occupied=' + occupied,
+      '&occupied=' + (+occupied ? occupied : 1),
       { method: 'PUT' }
     );
   }
