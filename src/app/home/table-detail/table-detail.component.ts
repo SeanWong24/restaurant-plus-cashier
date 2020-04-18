@@ -139,7 +139,46 @@ export class TableDetailComponent implements OnInit {
   }
 
   private async transfer() {
-    alert('Not implemented yet');
+    const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/table?status=Free');
+    const availableTableList = await response.json() as Table[];
+    if (availableTableList) {
+      const tableInputs = [];
+      for (const table of availableTableList) {
+        tableInputs.push(
+          {
+            name: table.name,
+            type: 'radio',
+            label: table.name,
+            value: table.id
+          }
+        )
+      }
+      const alert = await this.alertController.create({
+        header: 'Transfer to:',
+        inputs: tableInputs,
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary'
+          }, {
+            text: 'Confirm',
+            handler: async (data: string) => {
+              console.log("transfer: " + this.selectedTable.id + 'to: ' + data);
+              const response1 = await fetch(localStorage.getItem('serverApiBaseUrl') + 
+              '/table/transfer?id=' + this.selectedTable.id + 
+              '&transferId=' + data,
+              { method: 'PUT' }
+              );
+
+              this.tableListRefreshHandler();
+            }
+          }
+        ]
+      });
+
+      await alert.present();
+    }
   }
 
   private async modify(occupied: number) {
