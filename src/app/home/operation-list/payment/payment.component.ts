@@ -93,17 +93,20 @@ export class PaymentComponent implements OnInit {
     for (let billItemId of this.selectedBillItemIds) {
       const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill/item?id=' + billItemId + '&hasPaid=False');
       const billItem = await response.json() as BillItem;
-      const menuItemfromBillItem = await this.fetchMenuItem(billItem.menuItemId);
+      console.log(billItem);
+      const menuItemfromBillItem = await this.fetchMenuItem(billItem[0].menuItemId);
+      console.log(menuItemfromBillItem);
       this.mappedBillItems.push({
         name: menuItemfromBillItem.name,
         category: menuItemfromBillItem.categoryId,
         unitPrice: menuItemfromBillItem.unitPrice,
-        quantity: billItem.quantity,
+        quantity: billItem[0].quantity,
         gst: menuItemfromBillItem.gstRate,
         pst: menuItemfromBillItem.pstRate,
         lct: menuItemfromBillItem.lctRate
       });
     }
+    console.log(this.mappedBillItems);
     this.selectedBillItemPrice = await this.calculateSelectedBillItemPrice();
     this.shouldPay = this.selectedBillItemPrice;
   }
@@ -111,7 +114,7 @@ export class PaymentComponent implements OnInit {
   async fetchMenuItem(menuItemId: string){
     const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/menu/item?id=' + menuItemId);
     const menuItem = await response.json() as MenuItem;
-    return menuItem;
+    return menuItem[0];
   }
 
   private async calculateSelectedBillItemPrice() {
@@ -123,7 +126,7 @@ export class PaymentComponent implements OnInit {
                             selectedItem.unitPrice * selectedItem. quantity * selectedItem.lct
                           )
     });
-    return calculatedPrice
+    return calculatedPrice;
   }
   
   private async fetchBill(tableId: string) {
