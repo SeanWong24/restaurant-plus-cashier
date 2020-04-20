@@ -60,10 +60,18 @@ export class OperationListComponent implements OnInit {
         'Cancel',
         {
           text: 'Confirm',
-          handler: () => {
-            selectedItemList.forEach(async displayItem => {
-              const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill/item?id=' + displayItem.billItem.id, { method: 'DELETE' });
+          handler: async () => {
+            const selectedItemIdList = [];
+            selectedItemList.forEach(displayItem => {
+              selectedItemIdList.push(displayItem.billItem.id);
             });
+            const response = await fetch(
+              localStorage.getItem('serverApiBaseUrl') + '/bill/item',
+              {
+                headers: { 'Content-Type': 'application/json' },
+                method: 'DELETE',
+                body: JSON.stringify(selectedItemIdList)
+              })
             this.refreshBillItemsHandler();
           }
         }
