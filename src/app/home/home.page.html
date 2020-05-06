@@ -1,9 +1,12 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Cashier
+      Cashier {{user ? '- Hello, ' + user.name : ''}}
     </ion-title>
     <ion-buttons slot="end">
+      <ion-button *ngIf="user && role" title="Logout" (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
       <ion-button (click)="goToSettingsPage()">
         <ion-icon slot="icon-only" name="settings"></ion-icon>
       </ion-button>
@@ -11,50 +14,74 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content no-padding [fullscreen]="true">
-  <ion-grid style="height: 100%;">
-    <ion-row style="height: 100%;">
-      <ion-col size="4" style="height: 100%;">
-        <ion-row style="height: 70%;">
-          <ion-col style="height: 100%;">
-            <ion-card>
-              <app-table-list #tableListComponenet [(selectedTable)]="selectedTable"></app-table-list>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-        <ion-row style="height: 30%;">
-          <ion-col style="height: 100%;">
-            <ion-card>
-              <app-table-detail [selectedTable]="selectedTable"
-                [tableListRefreshHandler]="tableListComponenet.fetchTableList"></app-table-detail>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-      <ion-col size="5" style="height: 100%;">
-        <ion-row style="height: 70%;">
-          <ion-col style="height: 100%;">
-            <ion-card>
-              <app-bill-item-list #billItemListComponent [selectedTable]="selectedTable" [refreshBillSummaryHandler]="billSummaryComponent.refresh"></app-bill-item-list>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-        <ion-row style="height: 30%;">
-          <ion-col style="height: 100%;">
-            <ion-card>
-              <app-bill-summary #billSummaryComponent></app-bill-summary>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-      <ion-col size="3" style="height: 100%;">
-        <ion-card>
-          <app-operation-buttons [selectedTable]="selectedTable"
-            [displayedBillItemList]="billItemListComponent.displayedBillItemList"
-            [refreshBillItemsHandler]="billItemListComponent.refreshBillItems"
-            [tableListRefreshHandler]="tableListComponenet.fetchTableList"></app-operation-buttons>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <div *ngIf="user && role" style="height: 100%;">
+    <ion-grid style="height: 100%;">
+      <ion-row style="height: 100%;">
+        <ion-col size="4" style="height: 100%;">
+          <ion-row style="height: 70%;">
+            <ion-col style="height: 100%;">
+              <ion-card>
+                <app-table-list #tableListComponenet [(selectedTable)]="selectedTable"></app-table-list>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+          <ion-row style="height: 30%;">
+            <ion-col style="height: 100%;">
+              <ion-card>
+                <app-table-detail [selectedTable]="selectedTable"
+                  [tableListRefreshHandler]="tableListComponenet.fetchTableList"></app-table-detail>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="5" style="height: 100%;">
+          <ion-row style="height: 70%;">
+            <ion-col style="height: 100%;">
+              <ion-card>
+                <app-bill-item-list #billItemListComponent [selectedTable]="selectedTable"
+                  [refreshBillSummaryHandler]="billSummaryComponent.refresh"></app-bill-item-list>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+          <ion-row style="height: 30%;">
+            <ion-col style="height: 100%;">
+              <ion-card>
+                <app-bill-summary #billSummaryComponent></app-bill-summary>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="3" style="height: 100%;">
+          <ion-card>
+            <app-operation-buttons [selectedTable]="selectedTable"
+              [displayedBillItemList]="billItemListComponent.displayedBillItemList"
+              [refreshBillItemsHandler]="billItemListComponent.refreshBillItems"
+              [tableListRefreshHandler]="tableListComponenet.fetchTableList"></app-operation-buttons>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="!(user && role)">
+    <ion-grid>
+      <ion-row>
+        <ion-col></ion-col>
+        <ion-col>
+          <ion-input disabled style="font-size: 4em;" type="password" pattern="[0-9]*" inputmode="numeric" maxlength="6"
+            clearInput="true" placeholder="Access Code" [(ngModel)]="accessCode">
+          </ion-input>
+          <ion-row style="height: 300px;">
+            <ion-col *ngFor="let item of ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'clear', '0', 'delete']"
+              size="4">
+              <ion-button style="height: 100%; width: 100%; margin: 0;" (click)="accessCodeButtonClickHandler(item)">
+                {{item}}</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>
