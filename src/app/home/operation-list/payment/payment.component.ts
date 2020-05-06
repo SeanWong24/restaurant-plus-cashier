@@ -89,13 +89,17 @@ export class PaymentComponent implements OnInit {
     this.fetchBillItem();
   }
 
-  async fetchBillItem(){
+  async fetchBillItem() {
     for (let billItemId of this.selectedBillItemIds) {
-      const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill/item?id=' + billItemId + '&hasPaid=False');
+      const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill/item' +
+        '?id=' + billItemId +
+        '&hasPaid=False',
+        {
+          method: 'GET',
+          credentials: 'include'
+        });
       const billItem = await response.json() as BillItem;
-      console.log(billItem);
       const menuItemfromBillItem = await this.fetchMenuItem(billItem[0].menuItemId);
-      console.log(menuItemfromBillItem);
       this.mappedBillItems.push({
         name: menuItemfromBillItem.name,
         category: menuItemfromBillItem.categoryId,
@@ -106,12 +110,11 @@ export class PaymentComponent implements OnInit {
         lct: menuItemfromBillItem.lctRate
       });
     }
-    console.log(this.mappedBillItems);
     this.selectedBillItemPrice = await this.calculateSelectedBillItemPrice();
     this.shouldPay = this.selectedBillItemPrice;
   }
 
-  async fetchMenuItem(menuItemId: string){
+  async fetchMenuItem(menuItemId: string) {
     const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/menu/item?id=' + menuItemId);
     const menuItem = await response.json() as MenuItem;
     return menuItem[0];
@@ -119,22 +122,28 @@ export class PaymentComponent implements OnInit {
 
   private async calculateSelectedBillItemPrice() {
     let calculatedPrice = 0
-    this.mappedBillItems.forEach(selectedItem =>{
-      calculatedPrice += ( selectedItem.unitPrice * selectedItem.quantity +
-                            selectedItem.unitPrice * selectedItem. quantity * selectedItem.gst +
-                            selectedItem.unitPrice * selectedItem. quantity * selectedItem.pst +
-                            selectedItem.unitPrice * selectedItem. quantity * selectedItem.lct
-                          )
+    this.mappedBillItems.forEach(selectedItem => {
+      calculatedPrice += (selectedItem.unitPrice * selectedItem.quantity +
+        selectedItem.unitPrice * selectedItem.quantity * selectedItem.gst +
+        selectedItem.unitPrice * selectedItem.quantity * selectedItem.pst +
+        selectedItem.unitPrice * selectedItem.quantity * selectedItem.lct
+      )
     });
     return calculatedPrice;
   }
-  
+
   private async fetchBill(tableId: string) {
-    const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill?tableId=' + tableId + '&status=Open');
+    const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill' +
+      '?tableId=' + tableId +
+      '&status=Open',
+      {
+        method: 'GET',
+        credentials: 'include'
+      });
     const bill = await response.json() as Bill[];
     return bill[0];
   }
-  
+
   async confirmPayment() {
     if (this.selectedTable) {
       const bill = await this.fetchBill(this.selectedTable.id);
@@ -146,23 +155,29 @@ export class PaymentComponent implements OnInit {
           '&cashPayAmount=' + this.cashPay +
           '&cardPayAmount=' + this.cardPay +
           '&changeGiven=' + this.changeGiven,
-          { method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(this.selectedBillItemIds) });
-          
-          this.refreshBillItemsHandler();
+          {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(this.selectedBillItemIds)
+          });
 
-          const respond2 = await fetch(
-            localStorage.getItem('serverApiBaseUrl') +
-            '/bill/item?' +
-            'billId=' + bill.id +
-            '&hasPaid=' + 'false'
-          );
-          const unPaidItem = await respond2.json();
-          if (respond && Object.keys(unPaidItem).length == 0) {
-            this.closeTableAlertConfirm();
-          }
-          this.dismiss();
+        this.refreshBillItemsHandler();
+
+        const respond2 = await fetch(
+          localStorage.getItem('serverApiBaseUrl') +
+          '/bill/item?' +
+          'billId=' + bill.id +
+          '&hasPaid=false',
+          {
+            method: 'GET',
+            credentials: 'include'
+          });
+        const unPaidItem = await respond2.json();
+        if (respond && Object.keys(unPaidItem).length == 0) {
+          this.closeTableAlertConfirm();
+        }
+        this.dismiss();
       }
     }
   }
@@ -180,10 +195,12 @@ export class PaymentComponent implements OnInit {
           text: 'YES',
           handler: async () => {
             const respond3 = await fetch(localStorage.getItem('serverApiBaseUrl') +
-            '/table/close?' +
-            'id=' + this.selectedTable.id,
-            { method: 'PUT' }
-            );
+              '/table/close?' +
+              'id=' + this.selectedTable.id,
+              {
+                method: 'PUT',
+                credentials: 'include'
+              });
 
             this.tableListRefreshHandler();
           }

@@ -78,11 +78,15 @@ export class MenuItemPickerComponent implements OnInit {
         this.selectedMenuItemList.forEach(async item => {
           const response = await fetch(
             localStorage.getItem('serverApiBaseUrl') +
-            '/bill/item/add?billId=' + bill.id +
+            '/bill/item/add' +
+            '?billId=' + bill.id +
             '&menuItemId=' + item.id +
             '&quantity=' + item.quantity +
             '&groupId=' + 1,
-            { method: 'POST' });
+            {
+              method: 'POST',
+              credentials: 'include'
+            });
         });
         this.dismiss();
       }
@@ -108,7 +112,14 @@ export class MenuItemPickerComponent implements OnInit {
   }
 
   private async fetchBill(tableId: string) {
-    const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill?tableId=' + tableId + '&status=' + Bill.Status.Open);
+    const response = await fetch(
+      localStorage.getItem('serverApiBaseUrl') + '/bill' +
+      '?tableId=' + tableId +
+      '&status=' + Bill.Status.Open,
+      {
+        method: 'GET',
+        credentials: 'include'
+      });
     const bill = await response.json() as Bill[];
     return bill[0];
   }

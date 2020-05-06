@@ -68,8 +68,9 @@ export class OperationListComponent implements OnInit {
             const response = await fetch(
               localStorage.getItem('serverApiBaseUrl') + '/bill/item',
               {
-                headers: { 'Content-Type': 'application/json' },
                 method: 'DELETE',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(selectedItemIdList)
               })
             this.refreshBillItemsHandler();
@@ -88,8 +89,9 @@ export class OperationListComponent implements OnInit {
     const response = await fetch(
       localStorage.getItem('serverApiBaseUrl') + '/bill/item/combine',
       {
-        headers: { 'Content-Type': 'application/json' },
         method: 'PUT',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(billItemIdList)
       }
     );
@@ -119,8 +121,9 @@ export class OperationListComponent implements OnInit {
               const response = await fetch(
                 localStorage.getItem('serverApiBaseUrl') + '/bill/item/split?quantity=' + quantity,
                 {
-                  headers: { 'Content-Type': 'application/json' },
                   method: 'PUT',
+                  credentials: 'include',
+                  headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify(billItemIdList)
                 }
               );

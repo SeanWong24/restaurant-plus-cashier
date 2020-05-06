@@ -64,14 +64,26 @@ export class BillItemListComponent implements OnInit {
   }
 
   private async fetchBill(tableId: string) {
-    let response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill?tableId=' + tableId + '&status=' + Bill.Status.Open);
+    let response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill' +
+    '?tableId=' + tableId + 
+    '&status=' + Bill.Status.Open,
+    {
+      method: 'GET',
+      credentials: 'include'
+    });
     const bill = await response.json() as Bill[];
 
     return bill[0];
   }
 
   private async fetchBillItemList(billId: string, hasPaid: string) {
-    const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill/item?billId=' + billId + '&hasPaid=' + hasPaid);
+    const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill/item' +
+    '?billId=' + billId + 
+    '&hasPaid=' + hasPaid,
+    {
+      method: 'GET',
+      credentials: 'include'
+    });
     const billItemList = await response.json() as BillItem[];
     return billItemList;
   }

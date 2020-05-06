@@ -107,35 +107,46 @@ export class TableDetailComponent implements OnInit {
   private async open(occupied: number) {
     const response = await fetch(
       localStorage.getItem('serverApiBaseUrl') +
-      '/table/open?id=' + this.selectedTable.id +
+      '/table/open' +
+      '?id=' + this.selectedTable.id +
       '&occupied=' + (+occupied ? occupied : 1),
-      { method: 'PUT' }
-    );
+      {
+        method: 'PUT',
+        credentials: 'include'
+      });
   }
 
   private async reserve(occupied: number) {
     const response = await fetch(
       localStorage.getItem('serverApiBaseUrl') +
-      '/table/reserve?id=' + this.selectedTable.id +
+      '/table/reserve' +
+      '?id=' + this.selectedTable.id +
       '&occupied=' + occupied,
-      { method: 'PUT' }
-    );
+      {
+        method: 'PUT',
+        credentials: 'include'
+      });
   }
 
   private async disable() {
     const response = await fetch(
       localStorage.getItem('serverApiBaseUrl') +
-      '/table/disable?id=' + this.selectedTable.id,
-      { method: 'PUT' }
-    );
+      '/table/disable' +
+      '?id=' + this.selectedTable.id,
+      {
+        method: 'PUT',
+        credentials: 'include'
+      });
   }
 
   private async free() {
     const response = await fetch(
       localStorage.getItem('serverApiBaseUrl') +
       '/table/free?id=' + this.selectedTable.id,
-      { method: 'PUT' }
-    );
+      {
+        method: 'PUT',
+        credentials: 'include'
+      });
   }
 
   private async transfer() {
@@ -165,11 +176,14 @@ export class TableDetailComponent implements OnInit {
             text: 'Confirm',
             handler: async (data: string) => {
               console.log("transfer: " + this.selectedTable.id + 'to: ' + data);
-              const response1 = await fetch(localStorage.getItem('serverApiBaseUrl') + 
-              '/table/transfer?id=' + this.selectedTable.id + 
-              '&transferId=' + data,
-              { method: 'PUT' }
-              );
+              const response1 = await fetch(localStorage.getItem('serverApiBaseUrl') +
+                '/table/transfer' +
+                '?id=' + this.selectedTable.id +
+                '&transferId=' + data,
+                {
+                  method: 'PUT',
+                  credentials: 'include'
+                });
 
               this.tableListRefreshHandler();
             }
@@ -184,10 +198,13 @@ export class TableDetailComponent implements OnInit {
   private async modify(occupied: number) {
     const response = await fetch(
       localStorage.getItem('serverApiBaseUrl') +
-      '/table/modify-occupied?id=' + this.selectedTable.id +
+      '/table/modify-occupied' +
+      '?id=' + this.selectedTable.id +
       '&occupied=' + occupied,
-      { method: 'PUT' }
-    );
+      {
+        method: 'PUT',
+        credentials: 'include'
+      });
   }
 
   private async close() {
@@ -202,8 +219,10 @@ export class TableDetailComponent implements OnInit {
             const response = await fetch(
               localStorage.getItem('serverApiBaseUrl') +
               '/table/close?id=' + this.selectedTable.id,
-              { method: 'PUT' }
-            );
+              {
+                method: 'PUT',
+                credentials: 'include'
+              });
             // TODO doing this twice, try to find a solution to call it just once
             this.tableListRefreshHandler();
           }
