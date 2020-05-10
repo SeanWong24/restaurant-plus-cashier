@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Table } from 'src/app/models/table';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-table-list',
@@ -20,7 +21,7 @@ export class TableListComponent implements OnInit {
   }
   @Output() selectedTableChange = new EventEmitter();
 
-  constructor() { }
+  constructor(private alertController: AlertController) { }
 
   ngOnInit() {
     this.fetchTableList();
@@ -33,6 +34,47 @@ export class TableListComponent implements OnInit {
 
   selectTable(table: Table) {
     this.selectedTable = table;
+  }
+
+  async addTogo() {
+    const alert = await this.alertController.create({
+      header: 'Transfer to:',
+      inputs: [
+        {
+          type: 'radio',
+          label: 'Pick-up',
+          value: 'p'
+        },
+        {
+          type: 'radio',
+          label: 'Delivery',
+          value: 'd'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Confirm',
+          handler: async (data: string) => {
+            console.log(data);
+            const response1 = await fetch(localStorage.getItem('serverApiBaseUrl') +
+              '/bill/add/togo' +
+              '?togoType=' + data,
+              {
+                method: 'POST',
+                credentials: 'include'
+              });
+
+            this.fetchTableList();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   fetchTableList = async () => {
