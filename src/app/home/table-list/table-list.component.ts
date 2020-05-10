@@ -36,8 +36,9 @@ export class TableListComponent implements OnInit {
   }
 
   fetchTableList = async () => {
-    const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/table');
-    this.tableList = await response.json();
+    const response1 = await fetch(localStorage.getItem('serverApiBaseUrl') + '/table');
+    const response2 = await fetch(localStorage.getItem('serverApiBaseUrl') + '/table/togo');
+    this.tableList = (await response1.json() as Table[]).concat(await response2.json() as Table[]);
 
     if (this.selectedTable) {
       this.selectedTable = this.tableList.find(table => table.name == this.selectedTable.name);
