@@ -5,6 +5,7 @@ export class Table {
         Reserved: 'Reserved',
         Dirty: 'Dirty',
         Unavailable: 'Unavailable',
+        Togo: 'Togo'
     };
 
     id: string | undefined;

@@ -14,6 +14,8 @@ export class TableStatusColorPipe implements PipeTransform {
                 return 'warning';
             case 'Unavailable':
                 return 'danger';
+            case 'Togo':
+                return 'medium'
         }
     }
 }
