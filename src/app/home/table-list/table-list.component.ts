@@ -59,7 +59,6 @@ export class TableListComponent implements OnInit {
         }, {
           text: 'Confirm',
           handler: async (data: string) => {
-            console.log(data);
             const response1 = await fetch(localStorage.getItem('serverApiBaseUrl') +
               '/bill/add/togo' +
               '?togoType=' + data,

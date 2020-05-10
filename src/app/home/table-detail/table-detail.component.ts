@@ -175,7 +175,6 @@ export class TableDetailComponent implements OnInit {
           }, {
             text: 'Confirm',
             handler: async (data: string) => {
-              console.log("transfer: " + this.selectedTable.id + 'to: ' + data);
               const response1 = await fetch(localStorage.getItem('serverApiBaseUrl') +
                 '/table/transfer' +
                 '?id=' + this.selectedTable.id +
