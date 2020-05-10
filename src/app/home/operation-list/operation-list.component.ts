@@ -18,7 +18,7 @@ export class OperationListComponent implements OnInit {
   @Input() tableListRefreshHandler: () => void;
 
   get isSelectedTableUsing() {
-    return this.selectedTable && this.selectedTable.status === Table.Status.Using;
+    return this.selectedTable && (this.selectedTable.status === Table.Status.Using || this.selectedTable.status === Table.Status.Togo);
   }
 
   get isSelectedDisplayedBillItemListEmpty() {
