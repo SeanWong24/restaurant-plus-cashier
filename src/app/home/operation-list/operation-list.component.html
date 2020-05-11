@@ -1,7 +1,7 @@
 <ion-grid>
   <ion-row>
     <ion-col>
-      <ion-button [disabled]="!isSelectedTableUsing" class="large-button" color="medium" (click)="selectAll()">Select All
+      <ion-button [disabled]="!isSelectedTableUsing || isDisplayedBillItemListEmpty" class="large-button" color="medium" (click)="selectAll()">Select All
       </ion-button>
     </ion-col>
     <ion-col>

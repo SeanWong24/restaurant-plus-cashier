@@ -21,6 +21,10 @@ export class OperationListComponent implements OnInit {
     return this.selectedTable && (this.selectedTable.status === Table.Status.Using || this.selectedTable.status === Table.Status.Togo);
   }
 
+  get isDisplayedBillItemListEmpty() {
+    return !this.displayedBillItemList || this.displayedBillItemList.length <= 0;
+  }
+
   get isSelectedDisplayedBillItemListEmpty() {
     const selectedDisplayedBillItemList = this.displayedBillItemList.filter(displayedBillItem => displayedBillItem.isSelected);
     return !selectedDisplayedBillItemList || selectedDisplayedBillItemList.length <= 0;
