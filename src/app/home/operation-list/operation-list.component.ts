@@ -152,7 +152,7 @@ export class OperationListComponent implements OnInit {
         const discountList = this.turnListToRadioButton(availableDiscountList);
         const targetBillId = await this.getBillIdOfSelectedTable();
         const alert = await this.alertController.create({
-          header: 'Add discount to Bill at: ' + this.selectedTable.name,
+          header: 'Add discount to: ' + this.selectedTable.name,
           inputs: discountList,
           buttons: [
             {
@@ -172,6 +172,8 @@ export class OperationListComponent implements OnInit {
                       method: 'PUT',
                       credentials: 'include'
                     });
+
+                    if (response1) {this.messageAlert('Discount successfully applied.');}
                 }
               }
             }
@@ -184,7 +186,7 @@ export class OperationListComponent implements OnInit {
         const selectedDisplayedBillItemList = this.displayedBillItemList.filter(displayedBillItem => displayedBillItem.isSelected).map(item => item.billItem.id);
         console.log(selectedDisplayedBillItemList);
         const alert = await this.alertController.create({
-          header: 'Add discount to ' + selectedDisplayedBillItemList.length + ' Bill item(s).',
+          header: 'Add discount to ' + selectedDisplayedBillItemList.length + (selectedDisplayedBillItemList.length === 1?'item.': ' items.'),
           inputs: discountList,
           buttons: [
             {
@@ -194,7 +196,7 @@ export class OperationListComponent implements OnInit {
             }, {
               text: 'Confirm',
               handler: async (data: string) => {
-                const response1 = await fetch(localStorage.getItem('serverApiBaseUrl') +
+                const response2 = await fetch(localStorage.getItem('serverApiBaseUrl') +
                   '/bill/item/discount' +
                   '?discountId=' + data,
                   {
@@ -203,6 +205,8 @@ export class OperationListComponent implements OnInit {
                     body: JSON.stringify(selectedDisplayedBillItemList),
                     credentials: 'include'
                   });
+
+                  if (response2) {this.messageAlert('Discount successfully applied.');}
               }
             }
           ]
@@ -210,7 +214,7 @@ export class OperationListComponent implements OnInit {
         await alert.present();
       }
     } else {
-      this.noDiscountAlert();
+      this.messageAlert('No discounts available now. Please contact the manager.');
     }
   }
 
@@ -270,10 +274,10 @@ export class OperationListComponent implements OnInit {
     return bill[0].id;
   }
 
-  async noDiscountAlert() {
+  async messageAlert(message: string) {
     const alert = await this.alertController.create({
       header: 'Alert',
-      message: 'No discounts available now. Please contact the manager.',
+      message: message,
       buttons: ['OK']
     });
 
