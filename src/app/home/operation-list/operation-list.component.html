@@ -30,7 +30,7 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-button [disabled]="true" class="large-button" color="medium"></ion-button>
+      <ion-button [disabled]="!isSelectedTableUsing" class="large-button" color="medium" (click)="applyDiscount()">Discount</ion-button>
     </ion-col>
     <ion-col>
       <ion-button [disabled]="true" class="large-button" color="medium"></ion-button>
