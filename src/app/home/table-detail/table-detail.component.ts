@@ -161,8 +161,7 @@ export class TableDetailComponent implements OnInit {
             type: 'radio',
             label: table.name,
             value: table.id
-          }
-        )
+          })
       }
       const alert = await this.alertController.create({
         header: 'Transfer to:',
