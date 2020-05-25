@@ -3,6 +3,7 @@ import { DisplayedBillItem, BillItem } from 'src/app/models/bill-item';
 import { Table } from 'src/app/models/table';
 import { MenuItem } from 'src/app/models/menu-item';
 import { Bill } from 'src/app/models/bill';
+import { Discount } from 'src/app/models/discount';
 
 @Component({
   selector: 'app-bill-item-list',
@@ -34,7 +35,7 @@ export class BillItemListComponent implements OnInit {
       if (bill) {
         const menuItemList = await this.fetchMenuItemList();
         const billItemList = await this.fetchBillItemList(bill.id, "False");
-        this.displayedBillItemList = this.generateDisplayList(billItemList, menuItemList);
+        this.displayedBillItemList = await this.generateDisplayList(billItemList, menuItemList);
 
         this.refreshBillSummaryHandler(this.displayedBillItemList);
         return;
@@ -65,12 +66,12 @@ export class BillItemListComponent implements OnInit {
 
   private async fetchBill(tableId: string) {
     let response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill' +
-    '?tableId=' + tableId + 
-    '&status=' + Bill.Status.Open,
-    {
-      method: 'GET',
-      credentials: 'include'
-    });
+      '?tableId=' + tableId +
+      '&status=' + Bill.Status.Open,
+      {
+        method: 'GET',
+        credentials: 'include'
+      });
     const bill = await response.json() as Bill[];
 
     return bill[0];
@@ -78,21 +79,40 @@ export class BillItemListComponent implements OnInit {
 
   private async fetchBillItemList(billId: string, hasPaid: string) {
     const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill/item' +
-    '?billId=' + billId + 
-    '&hasPaid=' + hasPaid,
-    {
-      method: 'GET',
-      credentials: 'include'
-    });
+      '?billId=' + billId +
+      '&hasPaid=' + hasPaid,
+      {
+        method: 'GET',
+        credentials: 'include'
+      });
     const billItemList = await response.json() as BillItem[];
     return billItemList;
   }
 
-  private generateDisplayList(billItemList: BillItem[], menuItemList: MenuItem[]) {
+  private async fetchDiscountList(discountIdList: string[]) {
+    const result = [];
+    for (const id of discountIdList) {
+      const resopnse = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill/discount' +
+        '?id=' + id,
+        {
+          method: 'GET',
+          credentials: 'include'
+        });
+
+      const discount = (await resopnse.json() as Discount[])[0];
+      result.push(discount);
+    }
+    return result;
+  }
+
+  private async generateDisplayList(billItemList: BillItem[], menuItemList: MenuItem[]) {
     const list: DisplayedBillItem[] = [];
+
     for (const billItem of billItemList) {
       const menuItem = menuItemList.find(item => item.id === billItem.menuItemId);
-      list.push(new DisplayedBillItem(billItem, menuItem));
+      const discountList = await this.fetchDiscountList(billItem.discountIdList);
+
+      list.push(new DisplayedBillItem(billItem, menuItem, discountList));
     }
     return list;
   }
