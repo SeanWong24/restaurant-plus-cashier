@@ -184,7 +184,6 @@ export class OperationListComponent implements OnInit {
         // add discount to billItem
         const discountList = this.turnListToRadioButton(availableDiscountList);
         const selectedDisplayedBillItemList = this.displayedBillItemList.filter(displayedBillItem => displayedBillItem.isSelected).map(item => item.billItem.id);
-        console.log(selectedDisplayedBillItemList);
         const alert = await this.alertController.create({
           header: 'Add discount to ' + selectedDisplayedBillItemList.length + (selectedDisplayedBillItemList.length === 1?'item.': ' items.'),
           inputs: discountList,
