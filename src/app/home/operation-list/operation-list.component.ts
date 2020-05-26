@@ -165,7 +165,7 @@ export class OperationListComponent implements OnInit {
       if (this.isSelectedDisplayedBillItemListEmpty) {
         //add discount to bill
         const discountButtons = this.turnListToRadioButton(availableDiscountList);
-        const targetBillId = (await this.getBillOfSelectedTable()).id;
+        const targetBillId = this.currentBill.id;
         const alert = await this.alertController.create({
           header: 'Add discount to: ' + this.selectedTable.name,
           inputs: discountButtons,
@@ -241,7 +241,7 @@ export class OperationListComponent implements OnInit {
   async removeDiscount(groupId: string = '1') {
     if (this.isSelectedDisplayedBillItemListEmpty) {
       //remove discount from selected bill
-      const targetBill = await this.getBillOfSelectedTable();
+      const targetBill = this.currentBill;
       if (targetBill) {
         const disconutListOfBill = await this.fetchDicountList(targetBill.discountIdDict[groupId]);
         const discountButtons = this.turnListToRadioButton(disconutListOfBill);
@@ -375,19 +375,6 @@ export class OperationListComponent implements OnInit {
         })
     }
     return discountList;
-  }
-
-  private async getBillOfSelectedTable() {
-    const response = await fetch(localStorage.getItem('serverApiBaseUrl') +
-      '/bill' +
-      '?tableId=' + this.selectedTable.id +
-      '&status=Open',
-      {
-        method: 'GET',
-        credentials: 'include'
-      });
-    const bill = await response.json() as Bill[];
-    return bill[0];
   }
 
   private async messageAlert(message: string) {
