@@ -20,7 +20,11 @@
         </ion-row>
         <ion-row *ngIf="item.discountList?.length > 0">
           <ion-list>
-            <ion-note *ngFor="let discount of item.discountList">{{discount.name}}</ion-note>
+            <ion-note *ngFor="let discount of item.discountList">
+              <ion-label>
+                {{discount.name}}
+              </ion-label>
+            </ion-note>
           </ion-list>
         </ion-row>
       </ion-grid>
