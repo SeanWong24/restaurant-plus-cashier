@@ -3,6 +3,7 @@ import { Table } from '../models/table';
 import { NavController } from '@ionic/angular';
 import { User } from '../models/user';
 import { Role } from '../models/role';
+import { Bill } from '../models/bill';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,7 @@ import { Role } from '../models/role';
 export class HomePage {
 
   selectedTable: Table;
+  currentBill: Bill;
   private _accessCode: string = '';
   get accessCode() {
     return this._accessCode;

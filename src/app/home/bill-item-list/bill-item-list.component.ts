@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DisplayedBillItem, BillItem } from 'src/app/models/bill-item';
 import { Table } from 'src/app/models/table';
 import { MenuItem } from 'src/app/models/menu-item';
@@ -16,6 +16,16 @@ export class BillItemListComponent implements OnInit {
 
   @Input() refreshBillSummaryHandler: (dispalyItemList: DisplayedBillItem[]) => void;
 
+  private _currentBill: Bill;
+  get currentBill() {
+    return this._currentBill;
+  }
+  @Input() set currentBill(value: Bill) {
+    this._currentBill = value;
+    this.currentBillChange.emit(value);
+  }
+  @Output() currentBillChange = new EventEmitter();
+
   private _selectedTable: Table;
   get selectedTable() {
     return this._selectedTable;
@@ -31,10 +41,10 @@ export class BillItemListComponent implements OnInit {
 
   refreshBillItems = async () => {
     if (this.selectedTable) {
-      const bill = await this.fetchBill(this.selectedTable.id);
-      if (bill) {
+      this.currentBill = await this.fetchBill(this.selectedTable.id);
+      if (this.currentBill) {
         const menuItemList = await this.fetchMenuItemList();
-        const billItemList = await this.fetchBillItemList(bill.id, "False");
+        const billItemList = await this.fetchBillItemList(this.currentBill.id, "False");
         this.displayedBillItemList = await this.generateDisplayList(billItemList, menuItemList);
 
         this.refreshBillSummaryHandler(this.displayedBillItemList);

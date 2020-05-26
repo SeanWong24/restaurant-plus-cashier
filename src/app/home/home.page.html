@@ -41,7 +41,8 @@
             <ion-col style="height: 100%;">
               <ion-card>
                 <app-bill-item-list #billItemListComponent [selectedTable]="selectedTable"
-                  [refreshBillSummaryHandler]="billSummaryComponent.refresh"></app-bill-item-list>
+                  [refreshBillSummaryHandler]="billSummaryComponent.refresh"
+                  [(currentBill)]="currentBill"></app-bill-item-list>
               </ion-card>
             </ion-col>
           </ion-row>
@@ -58,7 +59,8 @@
             <app-operation-buttons [selectedTable]="selectedTable"
               [displayedBillItemList]="billItemListComponent.displayedBillItemList"
               [refreshBillItemsHandler]="billItemListComponent.refreshBillItems"
-              [tableListRefreshHandler]="tableListComponenet.fetchTableList"></app-operation-buttons>
+              [tableListRefreshHandler]="tableListComponenet.fetchTableList"
+              [currentBill]="currentBill"></app-operation-buttons>
           </ion-card>
         </ion-col>
       </ion-row>
