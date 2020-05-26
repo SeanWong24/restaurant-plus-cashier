@@ -90,19 +90,15 @@ export class BillItemListComponent implements OnInit {
   }
 
   private async fetchDiscountList(discountIdList: string[]) {
-    const result = [];
-    for (const id of discountIdList) {
-      const resopnse = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill/discount' +
-        '?id=' + id,
-        {
-          method: 'GET',
-          credentials: 'include'
-        });
+    const resopnse = await fetch(localStorage.getItem('serverApiBaseUrl') + '/bill/discount',
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(discountIdList)
+      });
 
-      const discount = (await resopnse.json() as Discount[])[0];
-      result.push(discount);
-    }
-    return result;
+    return await resopnse.json() as Discount[];
   }
 
   private async generateDisplayList(billItemList: BillItem[], menuItemList: MenuItem[]) {
@@ -110,7 +106,11 @@ export class BillItemListComponent implements OnInit {
 
     for (const billItem of billItemList) {
       const menuItem = menuItemList.find(item => item.id === billItem.menuItemId);
-      const discountList = await this.fetchDiscountList(billItem.discountIdList);
+      if (billItem.discountIdList.length > 0) {
+        var discountList = await this.fetchDiscountList(billItem.discountIdList);
+      } else {
+        discountList = [];
+      }
 
       list.push(new DisplayedBillItem(billItem, menuItem, discountList));
     }
