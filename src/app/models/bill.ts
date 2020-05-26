@@ -9,6 +9,5 @@ export class Bill {
     startTime: string;
     endTime?: string;
     status: string = Bill.Status.Open;
-    discountAmount: number = 0;
-    discountPercentage: number = 0;
+    discountIdDict: { [groupId: string]: string[] } = {};
 }
