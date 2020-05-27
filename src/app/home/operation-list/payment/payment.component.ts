@@ -105,9 +105,9 @@ export class PaymentComponent implements OnInit {
         category: menuItemfromBillItem.categoryId,
         unitPrice: menuItemfromBillItem.unitPrice,
         quantity: billItem[0].quantity,
-        gst: menuItemfromBillItem.gstRate,
-        pst: menuItemfromBillItem.pstRate,
-        lct: menuItemfromBillItem.lctRate
+        gst: Number(menuItemfromBillItem.gstRate),
+        pst: Number(menuItemfromBillItem.pstRate),
+        lct: Number(menuItemfromBillItem.lctRate)
       });
     }
     this.selectedBillItemPrice = await this.calculateSelectedBillItemPrice();
