@@ -332,8 +332,10 @@ export class OperationListComponent implements OnInit {
       componentProps: {
         selectedBillItemIds: billItemIdList,
         selectedTable: this.selectedTable,
+        currentBill: this.currentBill,
         refreshBillItemsHandler: this.refreshBillItemsHandler,
-        tableListRefreshHandler: this.tableListRefreshHandler
+        tableListRefreshHandler: this.tableListRefreshHandler,
+        fetchDiscountHandler: this.fetchDicountList
       }
     });
     await modal.present();
