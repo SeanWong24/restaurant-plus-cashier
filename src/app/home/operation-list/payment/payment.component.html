@@ -35,6 +35,9 @@
           </ion-row>
         </ion-grid>
       </ion-item>
+      <ion-item *ngFor="let discount of currentBillDiscountList">
+        <ion-label color="danger">Bill: {{ discount.name }}</ion-label>
+      </ion-item>
     </ion-col>
     <ion-col size="8">
       <ion-item>

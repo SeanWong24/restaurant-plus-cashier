@@ -122,14 +122,13 @@ export class PaymentComponent implements OnInit {
       }
 
     }
-    this.selectedBillItemPrice = await this.calculateSelectedBillItemPrice();
-    this.shouldPay = this.selectedBillItemPrice;
     if (this.currentBill.discountIdDict && this.currentBill.discountIdDict['1'].length > 0) {
       this.currentBillDiscountList = await this.fetchDiscountHandler(this.currentBill.discountIdDict['1']);
     } else {
       this.currentBillDiscountList = [];
     }
-    console.log(this.currentBillDiscountList);
+    this.selectedBillItemPrice = await this.calculateSelectedBillItemPrice();
+    this.shouldPay = this.selectedBillItemPrice;
   }
 
   async fetchMenuItem(menuItemId: string) {
