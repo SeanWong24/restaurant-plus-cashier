@@ -14,29 +14,40 @@
 <ion-content id="page-wrap">
   <ion-row style="height: 100%">
     <ion-col size="4">
-      <ion-item style="width: 100%" *ngFor="let menuItem of mappedBillItems" class="menu-item-box">
+      <ion-item style="width: 100%" *ngFor="let mappedItem of mappedBillItems" class="menu-item-box">
         <ion-grid>
           <ion-row>
             <ion-col size="8">
-              <ion-label text-wrap>{{ menuItem.name }} *{{ menuItem.quantity }}</ion-label>
+              <ion-label text-wrap>{{ mappedItem.name }} *{{ mappedItem.quantity }}</ion-label>
             </ion-col>
             <ion-col size="4">
               <ion-label color="medium" style="font-size:0.9em;">
-                ${{ (menuItem.unitPrice * menuItem.quantity * (1 +menuItem.pst + menuItem.gst + menuItem.lct)).toFixed(2) }}
+                ${{ (mappedItem.unitPrice * mappedItem.quantity * (1 +mappedItem.pst + mappedItem.gst + mappedItem.lct)).toFixed(2) }}
               </ion-label>
             </ion-col>
           </ion-row>
-          <ion-row *ngIf="menuItem.discountList?.length > 0">
+          <ion-row *ngIf="mappedItem.discountList?.length > 0">
             <ion-list>
-              <ion-note *ngFor="let discount of menuItem.discountList">
-                <ion-label color="danger">- {{discount.name}}</ion-label>
+              <ion-note *ngFor="let discount of mappedItem.discountList">
+                <ion-label color="danger">{{ discount.name }}: -${{ discount.type === "amount"?discount.value:discount.value*mappedItem.unitPrice*mappedItem.quantity }}</ion-label>
               </ion-note>
             </ion-list>
           </ion-row>
         </ion-grid>
       </ion-item>
-      <ion-item *ngFor="let discount of currentBillDiscountList">
-        <ion-label color="danger">Bill: {{ discount.name }}</ion-label>
+      <ion-item *ngIf="selectedItemPriceBeforeDiscount !== selectedBillItemPrice">
+        <ion-grid>
+          <ion-row>
+            <ion-label color="danger">Bill: -${{ (selectedItemPriceBeforeDiscount - selectedBillItemPrice).toFixed(2) }}</ion-label>
+          </ion-row>
+          <ion-row>
+            <ion-list>
+              <ion-note *ngFor="let discount of currentBillDiscountList">
+                <ion-label color="medium">{{ discount.name }}</ion-label>
+              </ion-note>
+            </ion-list>
+          </ion-row>
+        </ion-grid>
       </ion-item>
     </ion-col>
     <ion-col size="8">

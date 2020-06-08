@@ -19,6 +19,8 @@ export class PaymentComponent implements OnInit {
   cashAlreadyPay = false;
   cardAlreadyPay = false;
 
+  selectedItemPriceBeforeDiscount = 0;
+
   private _cashPay: number;
   get cashPay() {
     return this._cashPay;
@@ -154,6 +156,9 @@ export class PaymentComponent implements OnInit {
         }
       }
     });
+
+    this.selectedItemPriceBeforeDiscount = calculatedPrice;
+    
     if (this.currentBillDiscountList) {
       for (const discount of this.currentBillDiscountList) {
         calculatedPrice -=
