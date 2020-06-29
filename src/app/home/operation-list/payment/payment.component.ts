@@ -134,7 +134,13 @@ export class PaymentComponent implements OnInit {
   }
 
   async fetchMenuItem(menuItemId: string) {
-    const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/menu/item?id=' + menuItemId);
+    const response = await fetch(
+      localStorage.getItem('serverApiBaseUrl') + '/menu/item?id=' + menuItemId,
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    );
     const menuItem = await response.json() as MenuItem;
     return menuItem[0];
   }
@@ -158,7 +164,7 @@ export class PaymentComponent implements OnInit {
     });
 
     this.selectedItemPriceBeforeDiscount = calculatedPrice;
-    
+
     if (this.currentBillDiscountList) {
       for (const discount of this.currentBillDiscountList) {
         calculatedPrice -=

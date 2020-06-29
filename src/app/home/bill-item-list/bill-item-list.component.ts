@@ -69,7 +69,13 @@ export class BillItemListComponent implements OnInit {
   }
 
   private async fetchMenuItemList() {
-    const resopnse = await fetch(localStorage.getItem('serverApiBaseUrl') + '/menu/item');
+    const resopnse = await fetch(
+      localStorage.getItem('serverApiBaseUrl') + '/menu/item',
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    );
     const menuItemList = await resopnse.json() as MenuItem[];
     return menuItemList;
   }

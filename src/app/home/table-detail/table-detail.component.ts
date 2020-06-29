@@ -150,7 +150,13 @@ export class TableDetailComponent implements OnInit {
   }
 
   private async transfer() {
-    const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/table?status=Free');
+    const response = await fetch(
+      localStorage.getItem('serverApiBaseUrl') + '/table?status=Free',
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    );
     const availableTableList = await response.json() as Table[];
     if (availableTableList) {
       const tableInputs = [];

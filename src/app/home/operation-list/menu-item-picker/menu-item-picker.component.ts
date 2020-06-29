@@ -99,12 +99,24 @@ export class MenuItemPickerComponent implements OnInit {
   }
 
   private async fetchMenuItemList() {
-    const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/menu/item?status=' + MenuItem.Status.Available);
+    const response = await fetch(
+      localStorage.getItem('serverApiBaseUrl') + '/menu/item?status=' + MenuItem.Status.Available,
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    );
     this.menuItemList = await response.json() as MenuItem[];
   }
 
   async fetchMenuCategoryList() {
-    const response = await fetch(localStorage.getItem('serverApiBaseUrl') + '/menu/category');
+    const response = await fetch(
+      localStorage.getItem('serverApiBaseUrl') + '/menu/category',
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    );
     this.categoryList = await response.json() as MenuCategory[];
     if (this.categoryList && this.categoryList.length > 0) {
       this.selectedCategory = this.categoryList[0];
