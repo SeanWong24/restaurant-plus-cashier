@@ -124,7 +124,7 @@ export class PaymentComponent implements OnInit {
       }
 
     }
-    if (this.currentBill.discountIdDict && this.currentBill.discountIdDict['1'].length > 0) {
+    if (this.currentBill.discountIdDict['1'] && this.currentBill.discountIdDict['1'].length > 0) {
       this.currentBillDiscountList = await this.fetchDiscountHandler(this.currentBill.discountIdDict['1']);
     } else {
       this.currentBillDiscountList = [];
